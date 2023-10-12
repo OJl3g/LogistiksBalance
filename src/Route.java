@@ -29,4 +29,17 @@ public class Route {
     public Cafe[] getCafes() {
         return cafes;
     }
+
+
+    public void setNameRoute(String nameRoute) {
+        this.nameRoute = nameRoute;
+    }
+
+    public void setFreightForwarder(FreightForwarder freightForwarder) {
+        this.freightForwarder = freightForwarder;
+    }
+
+    public void setCafes(Cafe[] cafes) {
+        this.cafes = cafes;
+    }
 }

@@ -22,6 +22,7 @@ public class Menu {
 
                 }
                 case "3" -> {
+                    editRoute();
 
                 }
 
@@ -37,9 +38,9 @@ public class Menu {
             System.out.println("имя " + route.getFreightForwarder().getName());
             System.out.println("фамилия " + route.getFreightForwarder().getSurname());
             System.out.println("модель авто " + route.getFreightForwarder().getModelAuto());
-            System.out.println("isRefrigerator " + route.getFreightForwarder().isRefrigerator());
-            System.out.println("isMedicalBook " + route.getFreightForwarder().isMedicalBook());
-            System.out.println("isSanitationOfTheBody " + route.getFreightForwarder().isSanitationOfTheBody());
+            System.out.println("Refrigerator " + answer(route.getFreightForwarder().isRefrigerator()));
+            System.out.println("MedicalBook " + answer(route.getFreightForwarder().isMedicalBook()));
+            System.out.println("SanitationOfTheBody " + answer(route.getFreightForwarder().isSanitationOfTheBody()));
             System.out.println("");
 
             System.out.println("------Список Точек-------");
@@ -49,7 +50,7 @@ public class Menu {
                     System.out.println("cafe address " + cafe.getName());
                     System.out.println("cafe Address " + cafe.getAddress());
                     System.out.println("cafe LoadingTime " + cafe.getLoadingTime());
-                    System.out.println("cafe isCoffeeMachine " + cafe.isCoffeeMachine());
+                    System.out.println("cafe CoffeeMachine " + answer(cafe.isCoffeeMachine()));
                     System.out.println("\n\n");
 
                 }
@@ -58,21 +59,57 @@ public class Menu {
         }
     }
 
+    private boolean examinationAnswer(String text) {
+        System.out.println(text);
+        System.out.println("1 да");
+        System.out.println("2 нет");
+        String result = scanner.nextLine();
+        return result.equals("1") ? true : false;
+
+    }
+
     public void addRoute() {
         System.out.println("Введите название маршрута");
         String nameRoute = scanner.nextLine();
 
         FreightForwarder freightForwarder = createFreightForwarder();
 
-        System.out.println("Хотите ли сразу добавить  Магазины для этого маршрута");
-        System.out.println("1 да");
-        System.out.println("2 нет");
-
 
         Cafe[] cafes = new Cafe[50];
 
-        if (scanner.nextLine().equals("1")) {
+        if (examinationAnswer("Хотите ли сразу добавить  Магазины для этого маршрута")) {
             System.out.println("добавление точек");
+            while (true) {
+                System.out.println("Ведите название кафе");
+                String name = scanner.nextLine();
+
+                System.out.println("Введите адрес кафе");
+                String address = scanner.nextLine();
+
+
+                boolean coffeeMachine = examinationAnswer("Имеется ли кофемашина в кафе?");
+
+                System.out.println("Какое время загрузки кафе?");
+                double loadingTime = scanner.nextDouble();
+                scanner.nextLine();
+
+                Cafe cafe = new Cafe(address, name, coffeeMachine, loadingTime);
+
+                for (int i = 0; i < cafes.length; i++) {
+                    if (cafes[i] == null) {
+                        cafes[i] = cafe;
+                        break;
+                    }
+
+
+                }
+
+                if (!examinationAnswer("Добавить еще кафе?")) {
+                    break;
+                }
+
+            }
+
 
         }
         Route route = new Route(nameRoute, freightForwarder, cafes);
@@ -90,18 +127,69 @@ public class Menu {
         System.out.println("Введите модель авто экспедитора");
         String modelAuto = scanner.nextLine();
 
-        System.out.println("Имеется ли у авто рефрижератор ? 1 - Да   2 - Нет");
-        boolean refrigerator = scanner.nextLine().equals("1") ? true : false;
 
-        System.out.println("Имеется ли у экспедитора мед.книга? 1 - Да   2 - Нет");
-        boolean medicalBook = scanner.nextLine().equals("1") ? true : false;
-
-        System.out.println("Имеется ли у экспедитора сан.обработка? 1 - Да   2 - Нет");
-        boolean sanitationOfTheBody = scanner.nextLine().equals("1") ? true : false;
+        boolean refrigerator = examinationAnswer("Имеется ли у авто рефрижератор ? ");
+        boolean medicalBook = examinationAnswer("Имеется ли у экспедитора мед.книга?");
+        boolean sanitationOfTheBody = examinationAnswer("Имеется ли у экспедитора сан.обработка?");
 
         return new FreightForwarder(name, surname, modelAuto, refrigerator, medicalBook, sanitationOfTheBody);
 
     }
+
+    public String answer(boolean b) {
+        return b ? "есть" : "нету";
+    }
+
+    public void editRoute() {
+        System.out.println("Список мартшрутов");
+        for (Route route : routeArrayList) {
+            System.out.println(route.getNameRoute());
+        }
+
+        System.out.println("введите название маршрута котрый хотите редактировать");
+        String name = scanner.nextLine();
+
+        boolean b = false;
+        Route route = null;
+        for (Route r : routeArrayList) {
+            if (r.getNameRoute().equals(name)) {
+                b = true;
+                route = r;
+
+            }
+        }
+
+        if (b == false) {
+            System.out.println("маршрут не найден ");
+            return;
+        }
+
+        System.out.println("что необходимо изменить?");
+        System.out.println("1 - изменить экспедитора");
+        System.out.println("2 - изменить информацию о маршруте");
+        System.out.println("3 - редактировать сиписок кафе");
+
+        String answer = scanner.nextLine();
+
+        switch (answer) {
+            case "1" -> {
+                FreightForwarder freightForwarder = createFreightForwarder();
+                route.setFreightForwarder(freightForwarder);
+                System.out.println("вы успешно заменили водителя");
+                return;
+            }
+            case "2" -> {
+                //прнять новое название маршрута и присвоить маршруту
+            }
+            case "3" -> {
+                //вывести список 3 пунктов добавить маршрут удалить маршрут или редактироваь маршрут
+            }
+
+        }
+
+    }
+
+
 
 
 }
