@@ -1,3 +1,5 @@
+package entity;
+
 public class FreightForwarder {
     private String name;
     private String surname;

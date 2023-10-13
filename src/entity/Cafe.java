@@ -1,3 +1,5 @@
+package entity;
+
 public class Cafe {
     private String address;
     private String name;

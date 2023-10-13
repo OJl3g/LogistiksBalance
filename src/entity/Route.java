@@ -1,9 +1,13 @@
+package entity;
+
+import entity.Cafe;
+
 public class Route {
     private String nameRoute;
     private FreightForwarder freightForwarder;
     private Cafe[] cafes;
 
-    public Route(String nameRoute, FreightForwarder freightForwarder,Cafe [] cafe) {
+    public Route(String nameRoute, FreightForwarder freightForwarder, Cafe [] cafe) {
         this.nameRoute = nameRoute;
         this.freightForwarder = freightForwarder;
         this.cafes = cafe;
