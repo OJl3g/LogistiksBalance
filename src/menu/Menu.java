@@ -9,12 +9,14 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Menu {
+
     private static ArrayList<Route> routeArrayList = new ArrayList<>();
     private EditCafe editCafe = new EditCafe();
 
     private static Scanner scanner = new Scanner(System.in);
 
     public void firstStart() {
+        initializingRoutes();
         while (true) {
             System.out.println("1 Список Маршрутов");
             System.out.println("2 Добавить Маршрут");
@@ -117,6 +119,7 @@ public class Menu {
 
         switch (answer) {
             case "1" -> {
+                System.out.println(route.getFreightForwarder());
                 FreightForwarder freightForwarder = createFreightForwarder();
                 route.setFreightForwarder(freightForwarder);
                 System.out.println("вы успешно заменили водителя");
@@ -136,6 +139,20 @@ public class Menu {
             }
 
         }
+
+    }
+
+    public  void initializingRoutes() {
+        FreightForwarder freightForwarder = new FreightForwarder("Дмитрий", "Любицкий", "Ford",
+                true, true, true);
+        Cafe cafe = new Cafe("Химки 24", "ФМлог", true , 08.00);
+        Cafe cafe1 = new Cafe("Химки 44", "Ферронордик", false , 06.00);
+        Cafe cafe2 = new Cafe("Химки 56", "Икеа", true , 02.00);
+        Cafe cafe3 = new Cafe("Химки 77", "Элвис", false , 03.30);
+        Cafe[] cafes = {cafe, cafe2, cafe3, cafe1};
+
+        Route routes = new Route("Хаки", freightForwarder, cafes);
+        routeArrayList.add(routes);
 
     }
 

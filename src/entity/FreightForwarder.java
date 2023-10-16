@@ -17,6 +17,13 @@ public class FreightForwarder {
         this.sanitationOfTheBody = sanitationOfTheBody;
     }
 
+    @Override
+    public String toString() {
+        return "name: " + name + " model auto " + modelAuto + " refrigerator " + refrigerator + " medicalBook "
+                + medicalBook + " sanitationOfTheBody " + sanitationOfTheBody;
+
+    }
+
     public String getName() {
         return name;
     }
